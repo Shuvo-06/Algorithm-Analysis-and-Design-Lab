@@ -5,6 +5,8 @@
 using namespace std;
 using namespace __gnu_pbds;
 
+// yeah, this doesn't work, but can you explain why? 
+
 struct Edge {
     int u, v, w, id;
     static int counter;
