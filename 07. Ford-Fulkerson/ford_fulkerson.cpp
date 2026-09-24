@@ -28,35 +28,11 @@ int main() {
         return 0;
     };
 
-    function <int(int, int)> bfs = [&](int s, int t) {
-        if (s == t) return 0;
-        queue <tuple <int, int>> q; // node, flow
-        q.push({s, inf});
-        while (!q.empty()) {
-            auto [u, f] = q.front();
-            q.pop();
-            if (u == t) return f;
-
-            for (int v = 0; v < n; v++) {
-              if (parent[v] != -1 || residue[u][v] <= 0) continue;
-
-              int new_flow = min(f, residue[u][v]);
-              if (new_flow <= 0) continue;
-              else {
-                parent[v] = u;
-                q.push({v, new_flow});
-              }
-            }
-        }
-        return 0;
-    };
-
     int max_flow = 0;
     while (true) {
         fill(parent.begin(), parent.end(), -1);
         parent[s] = -2;
-        int new_flow = bfs(s, t);
-        // int new_flow = dfs(s, inf);
+        int new_flow = dfs(s, inf);
         if (new_flow == 0) break;
 
         int curr = t;
@@ -72,3 +48,27 @@ int main() {
     cout << max_flow << '\n';
     return 0;
 }
+
+/*
+6 9
+0 1 16
+0 2 13
+1 2 10
+2 1 4
+1 3 12
+2 4 14
+3 2 9
+3 5 20
+4 3 7
+0 5
+Expected : 19
+
+4 5
+0 1 100
+0 2 100
+1 2 1
+1 3 100
+2 3 100
+0 3
+Expected : 200
+*/
